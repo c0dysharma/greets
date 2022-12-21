@@ -1,9 +1,10 @@
 const express = require('express');
+const morgan = require('morgan');
+
+const eventsRouter = require('./routes/eventRoutes');
 
 const app = express();
-
-app.get('/', (req, res) => {
-  res.status(200).send('Hello, World');
-});
+app.use(morgan('dev'));
+app.use('/api/v1/events', eventsRouter);
 
 module.exports = app;
