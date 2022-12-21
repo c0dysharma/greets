@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const eventsRouter = require('./routes/eventRoutes');
+const eventsRouter = require('./routes/eventRoute');
 
 const app = express();
 app.use(morgan('dev'));
