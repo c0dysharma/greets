@@ -27,3 +27,11 @@ exports.updateEvent = async (req, res) => {
   });
   return res.status(200).json({ status: 'success', data: updatedEvent });
 };
+
+exports.deleteEvent = async (req, res) => {
+  const foundEvent = await Event.findById(req.params.id);
+  if (!foundEvent) return res.status(404).json({ status: 'faild', data: [] });
+
+  const deletedEvent = await Event.findByIdAndRemove(req.params.id);
+  return res.status(204).json({ status: 'success', data: deletedEvent });
+};
