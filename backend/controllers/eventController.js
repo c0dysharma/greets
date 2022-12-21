@@ -2,17 +2,19 @@ const Event = require('../models/eventModel');
 
 exports.getAllEvents = async (req, res) => {
   const allEvents = await Event.find({});
-  res.status(200).json({ status: 'success', data: allEvents });
+  return res.status(200).json({ status: 'success', data: allEvents });
 };
 
 exports.createEvent = async (req, res) => {
   const createdEvent = await Event.create(req.body);
-  res.status(201).json({ status: 'success', data: createdEvent });
+  return res.status(201).json({ status: 'success', data: createdEvent });
 };
 
 exports.getEvent = async (req, res) => {
   const foundEvent = await Event.findById(req.params.id);
-  res.status(200).json({ status: 'success', data: foundEvent });
+  if (!foundEvent) return res.status(404).json({ status: 'faild', data: [] });
+
+  return res.status(200).json({ status: 'success', data: foundEvent });
 };
 
 exports.updateEvent = async (req, res) => {
