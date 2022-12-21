@@ -5,7 +5,7 @@ const app = require('./app');
 
 mongoose.set('strictQuery', true);
 
-const db = 'mongodb://127.0.0.1:27017/events';
+const db = process.env.DB_REMOTE_URL;
 mongoose.connect(db).then(() => {
   console.log('Connection to DB successful.');
 });
