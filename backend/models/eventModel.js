@@ -27,6 +27,10 @@ const eventSchema = mongoose.Schema(
     },
     messageTitle: String,
     isActive: Boolean,
+    repeat: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
