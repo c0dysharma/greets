@@ -3,6 +3,10 @@ const typeConstant = require('../constants/typeConstant');
 
 const eventSchema = mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     to: {
       type: String,
       required: true,
@@ -25,10 +29,18 @@ const eventSchema = mongoose.Schema(
       required: true,
       default: new Date(),
     },
-    messageTitle: String,
-    isActive: Boolean,
+    messageTitle: {
+      type: String,
+      required: true,
+    },
+    isActive: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     repeat: {
       type: Boolean,
+      required: true,
       default: false,
     },
   },

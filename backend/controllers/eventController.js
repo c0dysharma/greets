@@ -5,6 +5,7 @@ exports.getAllEvents = async (req, res) => {
   res.status(200).json({ status: 'success', data: allEvents });
 };
 
-exports.createEvent = (req, res) => {
-  res.status(201).json({ status: 'success', data: {} });
+exports.createEvent = async (req, res) => {
+  const createdEvent = await Event.create(req.body);
+  res.status(201).json({ status: 'success', data: createdEvent });
 };
