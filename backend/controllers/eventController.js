@@ -2,7 +2,7 @@ const Event = require('../models/eventModel');
 const RequestFeatures = require('../utils/requestFeatures');
 
 exports.getAllEvents = async (req, res) => {
-  const Query = new RequestFeatures(Event, req.query)
+  const Query = new RequestFeatures(Event.find(), req.query)
     .filter()
     .sort()
     .limitFields()
@@ -17,7 +17,10 @@ exports.createEvent = async (req, res) => {
 };
 
 exports.getEvent = async (req, res) => {
-  const foundEvent = await Event.findById(req.params.id);
+  const Query = new RequestFeatures(Event.findById(req.params.id), req.query)
+    .filter()
+    .limitFields();
+  const foundEvent = await Query.query;
   if (!foundEvent) return res.status(404).json({ status: 'faild', data: [] });
 
   return res.status(200).json({ status: 'success', data: foundEvent });
