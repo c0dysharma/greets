@@ -13,7 +13,10 @@ class RequestFeatures {
     // Apply MongoDB projections
     let queryStr = JSON.stringify(queryCopy);
     // adds $ before gt, gte, lte, lt to make compatible with mongodb query options
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    queryStr = queryStr.replace(
+      /\b(gte|gt|lte|lt|ne)\b/g,
+      (match) => `$${match}`
+    );
     this.query = this.query.find(JSON.parse(queryStr));
     return this;
   }
@@ -44,7 +47,7 @@ class RequestFeatures {
   paginate() {
     // x 1 changes string to int
     const page = this.queryString.page * 1 || 1;
-    const limit = this.queryString.limit * 1 || 10;
+    const limit = this.queryString.limit * 1 || 100;
 
     const skip = (page - 1) * limit;
     this.query = this.query.skip(skip).limit(limit);
