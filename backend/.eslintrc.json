@@ -12,6 +12,7 @@
   },
   "rules": {
     "prettier/prettier": ["error"],
-    "quotes": [2, "single"]
+    "quotes": [2, "single"],
+    "no-process-exit": "warn"
   }
 }

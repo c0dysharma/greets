@@ -1,0 +1,50 @@
+[
+  {
+    "name": "K bithday Wish",
+    "to": "test@gmail.com",
+    "from": "c0dybhiya@gmail.com",
+    "type": "email",
+    "messageBody": "Happy Birthday to me :3",
+    "messageTitle": "Birthday Wish"
+  },
+  {
+    "name": "Dev bithday Wish",
+    "to": "dev@gmail.com",
+    "from": "c0dybhiya@gmail.com",
+    "type": "whatsapp",
+    "messageBody": "Happy Birthday Bitch",
+    "messageTitle": "Bitche's birthday"
+  },
+  {
+    "name": "Priyanshu's Bday",
+    "to": "pprana@gmail.com",
+    "from": "kuldeep.58538@gmail.com",
+    "type": "sms",
+    "messageBody": "PRana Happy Birthday ji",
+    "messageTitle": "Founder DA bday"
+  },
+  {
+    "name": "Badi Didi Marraige Anniversary",
+    "to": "sunita@gmail.com",
+    "from": "c0dybhiya@gmail.com",
+    "type": "email",
+    "messageBody": "Happy Marraige Anniversary",
+    "messageTitle": "Happy Marriage Anniversary"
+  },
+  {
+    "name": "Didi bday",
+    "to": "monika@gmail.com",
+    "from": "kuldeep.58538@gmail.com",
+    "type": "sms",
+    "messageBody": "Happy Birthday Didi",
+    "messageTitle": "Birthday Wish 2"
+  },
+  {
+    "name": "K bithday Wish another",
+    "to": "test@gmail.com",
+    "from": "c0dybhiya@gmail.com",
+    "type": "email",
+    "messageBody": "Happy Birthday to me :3 again",
+    "messageTitle": "Birthday Wish"
+  }
+]
