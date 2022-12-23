@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Sents timely greetings to person you want on their birthdays, anniversaries, any other events.",
   "main": "server.js",
+  "engines": {
+    "node": ">19.0.0"
+  },
   "scripts": {
     "start": "nodemon server.js"
   },

@@ -1,7 +1,13 @@
 const Event = require('../models/eventModel');
+const RequestFeatures = require('../utils/requestFeatures');
 
 exports.getAllEvents = async (req, res) => {
-  const allEvents = await Event.find({});
+  const Query = new RequestFeatures(Event, req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const allEvents = await Query.query;
   return res.status(200).json({ status: 'success', data: allEvents });
 };
 
