@@ -13,10 +13,10 @@ exports.getAllEvents = catchAsync(async (req, res, next) => {
   return res.status(200).json({ status: 'success', data: allEvents });
 });
 
-exports.createEvent = async (req, res, next) => {
+exports.createEvent = catchAsync(async (req, res, next) => {
   const createdEvent = await Event.create(req.body);
   return res.status(201).json({ status: 'success', data: createdEvent });
-};
+});
 
 exports.getEvent = catchAsync(async (req, res, next) => {
   const Query = new RequestFeatures(Event.findById(req.params.id), req.query)
@@ -31,7 +31,7 @@ exports.getEvent = catchAsync(async (req, res, next) => {
   return res.status(200).json({ status: 'success', data: foundEvent });
 });
 
-exports.updateEvent = async (req, res, next) => {
+exports.updateEvent = catchAsync(async (req, res, next) => {
   const foundEvent = await Event.findById(req.params.id);
   if (!foundEvent)
     return next(new AppError('Requested resource not found', 404));
@@ -41,13 +41,13 @@ exports.updateEvent = async (req, res, next) => {
     new: true,
   });
   return res.status(200).json({ status: 'success', data: updatedEvent });
-};
+});
 
-exports.deleteEvent = async (req, res, next) => {
+exports.deleteEvent = catchAsync(async (req, res, next) => {
   const foundEvent = await Event.findById(req.params.id);
   if (!foundEvent)
     return next(new AppError('Requested resource not found', 404));
 
   const deletedEvent = await Event.findByIdAndRemove(req.params.id);
   return res.status(204).json({ status: 'success', data: deletedEvent });
-};
+});
