@@ -1,5 +1,7 @@
+/* eslint-disable quotes */
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const userSchema = mongoose.Schema({
   name: {
@@ -23,8 +25,22 @@ const userSchema = mongoose.Schema({
   passwordConfirm: {
     type: String,
     required: true,
+    validate: {
+      validator(el) {
+        return el === this.password;
+      },
+      message: "Passwords don't match.",
+    },
   },
   displayImage: String,
+});
+
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, 12);
+    this.passwordConfirm = undefined;
+  }
+  next();
 });
 
 const User = mongoose.model('User', userSchema);
