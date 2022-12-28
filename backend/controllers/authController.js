@@ -37,7 +37,7 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.validateUser = catchAsync(async (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization)
+  if (!(authorization && authorization.split(' ')[0] === 'Bearer'))
     return next(
       new AppError('No authorization token found, Please login again.', 401)
     );
