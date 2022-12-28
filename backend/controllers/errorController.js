@@ -33,6 +33,11 @@ const handleValidationErrorDB = (err) => {
   return new AppError(message, 400);
 };
 
+const handleJWTError = () => new AppError('Unknown token. Please login.', 401);
+
+const handleJWTTokenExpiredError = () =>
+  new AppError('Token expred, Please login again.', 401);
+
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
@@ -42,6 +47,8 @@ module.exports = (err, req, res, next) => {
   // when its in production
   if (err.name === 'CastError') err = handleCastErrorDB(err);
   if (err.name === 'ValidationError') err = handleValidationErrorDB(err);
+  if (err.name === 'JsonWebTokenError') err = handleJWTError();
+  if (err.name === 'TokenExpiredError') err = handleJWTTokenExpiredError();
 
   return sendErrorProd(err, res);
 };

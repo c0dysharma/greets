@@ -34,6 +34,10 @@ const userSchema = mongoose.Schema({
     },
   },
   displayImage: String,
+  passwordChangedAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 userSchema.pre('save', async function (next) {
@@ -47,5 +51,17 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.validatePassword = (candidatePassword, userPasswordHash) =>
   bcrypt.compare(candidatePassword, userPasswordHash);
 
+// this is only allowed in legacy function (){}
+userSchema.methods.validateToken = function (tokenIAT) {
+  // return true if validation successfull else false
+  if (this.passwordChangedAt) {
+    const lastChangedSeconds = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    return tokenIAT >= lastChangedSeconds;
+  }
+  return true;
+};
 const User = mongoose.model('User', userSchema);
 module.exports = User;

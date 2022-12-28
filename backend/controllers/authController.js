@@ -1,3 +1,4 @@
+const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
@@ -31,4 +32,30 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Email or password is incorrect', 400));
   const token = generateJWTtoken(user._id);
   return res.status(200).json({ status: 'success', token });
+});
+
+exports.validateUser = catchAsync(async (req, res, next) => {
+  const { authorization } = req.headers;
+
+  if (!authorization)
+    return next(
+      new AppError('No authorization token found, Please login again.', 401)
+    );
+
+  // verify token
+  const token = authorization.split(' ')[1];
+  const decodedData = await promisify(jwt.verify)(token, process.env.JWT_TOKEN);
+
+  // check if user exists
+  const user = await User.findById(decodedData.id);
+  if (!user)
+    return next(new AppError('Authorization error, please login again'), 401);
+
+  // check if password changed after token issue time
+  const stillValid = user.validateToken(decodedData.iat);
+  if (!stillValid)
+    return next(new AppError('Authorization error, please login again'), 401);
+
+  req.user = user;
+  next();
 });
