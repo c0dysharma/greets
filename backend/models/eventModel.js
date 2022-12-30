@@ -1,33 +1,31 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 const typeConstant = require('../constants/typeConstant');
+const customValidator = require('../utils/cutomValidators');
 
 const eventSchema = mongoose.Schema(
   {
+    userID: mongoose.Schema.Types.ObjectId,
     name: {
       type: String,
       required: true,
       trim: true,
       minLength: [4, 'Event name string length should be >= 4'],
-      maxLength: [15, 'Event name string length should be < 25'],
+      maxLength: [30, 'Event name string length should be < 30'],
     },
     to: {
       type: String,
       required: true,
       trim: true,
       validate: {
-        validator: validator.isEmail,
-        message: 'Enter a valid receipent email address.',
+        validator: customValidator.validateReceipent,
+        message: 'Enter a valid receipent address.',
       },
     },
     from: {
       type: String,
-      required: true,
       trim: true,
-      validate: {
-        validator: validator.isEmail,
-        message: 'Enter a valid from email address.',
-      },
+      minLength: [4, 'Sender name string length should be >= 4'],
+      maxLength: [30, 'Sender name string length should be < 30'],
     },
     type: {
       type: String,
@@ -41,7 +39,7 @@ const eventSchema = mongoose.Schema(
       trim: true,
       required: true,
       minLength: [4, 'Message body string length should be >= 4'],
-      maxLength: [100, 'Message body string length should be < 100'],
+      maxLength: [500, 'Message body string length should be < 500'],
     },
     dateTime: {
       type: Date,

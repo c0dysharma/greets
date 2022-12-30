@@ -7,12 +7,12 @@ const router = express.Router();
 router
   .route('/')
   .get(authController.validateUser, eventController.getAllEvents)
-  .post(eventController.createEvent);
+  .post(authController.validateUser, eventController.createEvent);
 
 router
   .route('/:id')
-  .get(eventController.getEvent)
-  .patch(eventController.updateEvent)
-  .delete(eventController.deleteEvent);
+  .get(authController.validateUser, eventController.getEvent)
+  .patch(authController.validateUser, eventController.updateEvent)
+  .delete(authController.validateUser, eventController.deleteEvent);
 
 module.exports = router;

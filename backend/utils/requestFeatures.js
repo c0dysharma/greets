@@ -4,7 +4,7 @@ class RequestFeatures {
     this.queryString = queryString;
   }
 
-  filter() {
+  filter(userID) {
     // Remove MongoDB functions
     const queryToBeRemoved = ['fields', 'limit', 'page', 'sort'];
     const queryCopy = { ...this.queryString };
@@ -17,7 +17,11 @@ class RequestFeatures {
       /\b(gte|gt|lte|lt|ne)\b/g,
       (match) => `$${match}`
     );
-    this.query = this.query.find(JSON.parse(queryStr));
+
+    // show resource only attached to the account
+    if (userID)
+      this.query = this.query.find(JSON.parse(queryStr)).where({ userID });
+    else this.query = this.query.find(JSON.parse(queryStr));
     return this;
   }
 
