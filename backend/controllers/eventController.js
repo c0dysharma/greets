@@ -2,6 +2,7 @@ const Event = require('../models/eventModel');
 const RequestFeatures = require('../utils/requestFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const emailScheduleJob = require('../jobs/emailScheduleJob');
 
 exports.getAllEvents = catchAsync(async (req, res, next) => {
   const Query = new RequestFeatures(Event.find(), req.query)
@@ -19,6 +20,7 @@ exports.createEvent = catchAsync(async (req, res, next) => {
     from: req.user.name,
     userID: req.user._id,
   });
+  emailScheduleJob.fromDate(createdEvent);
   return res.status(201).json({ status: 'success', data: createdEvent });
 });
 
@@ -58,6 +60,7 @@ exports.updateEvent = catchAsync(async (req, res, next) => {
       new: true,
     }
   );
+  if (updatingFields.dateTime) emailScheduleJob.fromDate(updatedEvent);
   return res.status(200).json({ status: 'success', data: updatedEvent });
 });
 
@@ -72,5 +75,7 @@ exports.deleteEvent = catchAsync(async (req, res, next) => {
     return next(new AppError('Requested resource not found', 404));
 
   const deletedEvent = await Event.findByIdAndRemove(req.params.id);
+  // delete its job if scheduled
+  emailScheduleJob.cancel(deletedEvent._id);
   return res.status(204).json({ status: 'success', data: deletedEvent });
 });
