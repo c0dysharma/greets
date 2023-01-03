@@ -42,3 +42,5 @@ exports.sendEmail = async (from, to, subject, text) => {
   });
   return emailInfo;
 };
+
+// sendEmail('', 'codysharma01@gmail.com', 'test', 'test');
