@@ -16,7 +16,7 @@
     "no-process-exit": "warn",
     "no-param-reassign": "off",
     "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }],
-    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "no-underscore-dangle": ["off"],
     "consistent-return": "off"
   }
 }
